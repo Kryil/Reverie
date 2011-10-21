@@ -1,0 +1,48 @@
+Reverie microframework for PHP 5.3.
+
+This was an one night project inspired by a chat about the MVC architechture
+and model binding in PHP. It seemed like there are no other framework that
+provides even rudimentary model binding, so I decided to try if it was
+possible.
+
+The model binding works on primitives, arrays and classes. All public members
+of the classes are bound with values from request data. The request variable
+must be named after the controller parameter and class member, separated with
+a dot.
+
+For example, if you have a controller method with signature
+
+  public function action_example(models\ExampleModel $model)
+
+And the class models\ExampleModel is something like
+
+  class ExampleModel extends \reverie\ViewModel
+  {
+    public $one;
+    public $two;
+  }
+
+Then the request data must contain two variables:
+
+  model.one
+  model.two
+
+
+The binding is done by class \reverie\Binder with the help of method
+\reverie\ViewModel::bind().
+
+
+The app directory contains an example application with a controller,
+viewmodel and a view. It can be launched with a command
+(at least in Linux with bash)
+
+  REQUEST='world.name=my world' php cli.php hello
+
+This will output text "Hello, my world!".
+
+There is also a test helper controller named tests.
+
+
+I'm releasing this project in hopes that it will be useful for someone
+as a learning material or perhaps in a small projects. The code is licensed
+under two clause BSD.
